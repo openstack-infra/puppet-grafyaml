@@ -8,8 +8,10 @@
 #   Explanation of what this parameter affects and what it defaults to.
 #
 class grafyaml (
+  $config_dir = '',
   $git_revision = 'master',
   $git_source = 'https://git.openstack.org/openstack-infra/grafyaml',
+  $grafana_url = 'http://localhost:8080',
 ) {
   include ::pip
 
@@ -41,15 +43,22 @@ class grafyaml (
     force   => true,
     source  => $config_dir,
     require => File['/etc/grafyaml'],
-    notify  => Exec['grafana_dashboards_update'],
+    notify  => Exec['grafana_dashboard_update'],
   }
 
-  exec { 'grafana_dashboards_update':
-    command     => 'grafana-dashboards update /etc/grafyaml/config',
+  file { '/etc/grafyaml/grafyaml.conf':
+    ensure  => present,
+    content => template('grafyaml/grafyaml.conf.erb'),
+    mode    => '0400',
+    require => File['/etc/grafyaml'],
+  }
+
+  exec { 'grafana_dashboard_update':
+    command     => 'grafana-dashboard --config-file /etc/grafyaml/grafyaml.conf update /etc/grafyaml/config',
     path        => '/bin:/usr/bin:/usr/local/bin',
     refreshonly => true,
     require     => [
-      Package['python-grafyaml'],
+      Exec['install_grafyaml'],
     ],
   }
 }
