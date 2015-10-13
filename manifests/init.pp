@@ -1,11 +1,17 @@
 # == Class: grafyaml
 #
-# Full description of class grafyaml here.
+# Grafyaml takes simple descriptions of Grafana dashboards in YAML format, and
+# uses them to configure Grafana.
 #
 # === Parameters
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
+# [*config_dir*]
+#
+# [*git_revision*]
+#
+# [*git_source*]
+#
+# [*grafana_url*]
 #
 class grafyaml (
   $config_dir = '',
