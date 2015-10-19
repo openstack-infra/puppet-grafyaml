@@ -30,6 +30,7 @@ class grafyaml (
 
   exec { 'install_grafyaml':
     command     => 'pip install /opt/grafyaml',
+    notify      => Exec['grafana_dashboard_update'],
     path        => '/usr/local/bin:/usr/bin:/bin/',
     refreshonly => true,
     subscribe   => Vcsrepo['/opt/grafyaml'],
