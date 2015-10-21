@@ -21,11 +21,11 @@ class grafyaml (
 ) {
   include ::pip
 
-  vcsrepo { '/opt/grafyaml':
-    ensure   => latest,
-    provider => git,
-    revision => $git_revision,
-    source   => $git_source,
+  git { '/opt/grafyaml':
+    ensure => present,
+    branch => $git_revision,
+    latest => true,
+    origin => $git_source,
   }
 
   exec { 'install_grafyaml':
@@ -33,7 +33,7 @@ class grafyaml (
     notify      => Exec['grafana_dashboard_update'],
     path        => '/usr/local/bin:/usr/bin:/bin/',
     refreshonly => true,
-    subscribe   => Vcsrepo['/opt/grafyaml'],
+    subscribe   => Git['/opt/grafyaml'],
   }
 
   file { '/etc/grafyaml':
