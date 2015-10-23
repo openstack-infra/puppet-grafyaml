@@ -62,6 +62,7 @@ class grafyaml (
 
   exec { 'grafana_dashboard_update':
     command     => 'grafana-dashboard --config-file /etc/grafyaml/grafyaml.conf update /etc/grafyaml/config',
+    logoutput   => true,
     path        => '/bin:/usr/bin:/usr/local/bin',
     refreshonly => true,
     require     => [
