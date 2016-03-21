@@ -16,8 +16,8 @@
 class grafyaml (
   $config_dir,
   $git_revision = 'master',
-  $git_source = 'https://git.openstack.org/openstack-infra/grafyaml',
-  $grafana_url = 'http://localhost:8080',
+  $git_source   = 'https://git.openstack.org/openstack-infra/grafyaml',
+  $grafana_url  = 'http://localhost:8080',
 ) {
   include ::pip
 
